@@ -17,8 +17,8 @@ public class ElevationMap {
     // 2 in the second, and 3 in the fourth index (we cannot hold 5 since it would run off to the left),
     // so we can trap 8 units of water.
 
-    private static List<Integer> inputMap = new ArrayList<>(Arrays.asList(5, 3, 0, 5));
-    private static int waterLever = 5;
+    private static List<Integer> inputMap = new ArrayList<>(Arrays.asList(3, 0, 1, 1));
+    private static int waterLever = 2;
 
     public static void main(String[] args) {
 //        System.out.println("Insert 3 numbers: ");
@@ -34,13 +34,15 @@ public class ElevationMap {
 
         System.out.println(GetNumberOfWater(inputMap, waterLever));
     }
-    private static int GetNumberOfWater(List<Integer> inputMap, int waterLever) {
+    static int GetNumberOfWater(List<Integer> inputMap, int waterLever) {
         int numberOfWater = 0;
-        for (int i = 0; i < waterLever; i++) {
+        //iteracja po poziomach wody
+        for (int i = 0; i < waterLever; i++) { // i - poziom, aż do wody
             System.out.println(i + " level iteration...");
-            for (int j = 0; j < inputMap.size(); j++) {
+            //iteracja po kolumnach w danym poziomie
+            for (int j = 0; j < inputMap.size(); j++) { // j - kolumna
                 System.out.print("Level: " + i + " block: " + j);
-                //tu trzeba znaleźć pusty blok
+                //znajdowanie pustego bloku
                 boolean empty;
                 if (inputMap.get(j) <= i) empty = true;
                 else empty = false;
@@ -49,16 +51,17 @@ public class ElevationMap {
                     boolean isRightSealed = false;
                     boolean isLeftSealed = false;
                     boolean isSealed = false;
-                    //sprawdzam czy szczelne po obu stronach
+                    //sprawdzam, czy szczelne po obu stronach
+                    //szczelne jest wtedy, gdy rozpatrywany poziom (np. 1) jest mniejszy od wartości mapy w kolumnie (np. 2)
                     for (int r = j; r < inputMap.size(); r++) {
                         //sprawdzanie w prawo
-                        if (inputMap.get(r) >= inputMap.get(j)) {
+                        if (inputMap.get(r) > i) {
                             isRightSealed = true;
                         }
                     }
                     for (int r = j; r >= 0; r--) {
                         //sprawdzanie w lewo
-                        if (inputMap.get(r) >= inputMap.get(j)) {
+                        if (inputMap.get(r) > i) {
                             isLeftSealed = true;
                         }
                     }
