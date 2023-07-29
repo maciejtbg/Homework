@@ -1,11 +1,6 @@
 package homework;
 
-import java.sql.SQLOutput;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Stream;
+import java.util.*;
 
 public class Palindrome {
 
@@ -22,16 +17,19 @@ public class Palindrome {
 //    As another example, given the string "google", you should return "elgoogle".
 
 
-    static String inputString = "edmadea";
+    static String inputString = "jajk"; //niedziała
+//    static String inputString = "abemngeb"; //działa
+
     public static void main(String[] args) {
 
-        System.out.println("Give a string:");
+        System.out.print("Give a string: ");
+        System.out.println(inputString);
         Scanner s = new Scanner(System.in);
 //        String inputString = s.nextLine();
 //        System.out.println(CheckIfPalindrome(inputString));
 //        System.out.println(InvertString(inputString));
 //        System.out.println(FindReversed(inputString));
-        System.out.println(FindReversed(inputString));
+        System.out.println(FindShortestPalindrome(inputString));
 //        System.out.println(MakePalindrome(inputString));
 
     }
@@ -44,7 +42,7 @@ public class Palindrome {
         }
         return isPalindrome;
     }
-    static List<String> FindReversed(String inputString){
+    static String FindShortestPalindrome(String inputString){
         //inicjalizuje zmienne przechowujące największy powtarzający się kawałek tekstu
         int l = 0;//długość
         int p = 0;//miejsce
@@ -52,42 +50,80 @@ public class Palindrome {
         String invertedString = "";
         String restLeft ="";
         String restRight = "";
+        String maxRepetitionStart = "";
+        String centerPalindrome="";
+        String mirrorRepetition="";
         List<String> result = new LinkedList<>();
-        String repetisionString = null; //póki co ten string jest jako pojedynczy, ale musi być docelowo lista
         //pętla wycinająca kawałki ze stringa
         for(int i=1; i<=inputString.length(); i++){
             //i symbolizuje długość sprawdzanego stringa
             for (int j=0; j<inputString.length()-i+1; j++){
                 //j symbolizuje miejsce w stringu
                 String partOfString = inputString.substring(j,j+i);
-                System.out.print("L: "+i+" P: "+j+" "+partOfString+" ");
+//                System.out.print("L: "+i+" P: "+j+" "+partOfString+" ");
                 //tu trzeba znaleźć powtarzający się kawałek tekstu, ale w innym miejscu
                 invertedString = InvertString(partOfString);
-                boolean contains = inputString.substring(j+1).contains(InvertString(partOfString));
-                System.out.println(contains);
+                boolean contains = inputString.substring(j+1).contains(invertedString);
+//                System.out.println(contains);
 
 
-                if (contains){
-                    pm=inputString.lastIndexOf(invertedString);
+                if (contains){//rozpatrywany kawałektekstu się powtarza gdzieś w tekscie
+                    System.out.println("inversedString: "+invertedString);
+                    pm=inputString.lastIndexOf(invertedString);//pm to place mirror - miejsce odwróconego tekstu
+                    l=i;p=j;
                     if (j==0 && (pm+i)==inputString.length()){
                         System.out.println("Bez ogonków");
+                        //tu tylko trzeba zmodyfikować środek i dodać do listy result
+                        maxRepetitionStart=inputString.substring(p,p+l);
+                        centerPalindrome=MakePalindrome(inputString.substring(p+l,pm));
+                        mirrorRepetition=inputString.substring(pm,pm+l);
+                        System.out.println("Reszta z lewej: "+restLeft);
+                        System.out.println("Największa repetycja: "+maxRepetitionStart);
+                        System.out.println("Palindrom z wnętrza: "+centerPalindrome);
+                        System.out.println("Lustrzana repetycja: "+mirrorRepetition);
+                        System.out.println("Reszta z prawej: "+restRight);
+                        result.add(maxRepetitionStart+centerPalindrome+mirrorRepetition);
+
                     } else if (j==0 || (pm+i)==inputString.length()) {
                         System.out.println("Z jednym ogonkiem");
                         if (j==0){
                             restRight=inputString.substring(pm+i);
                             System.out.println("Ogonek tylko z prawej: "+restRight);
+                            //zmodyfikować środek i dodać ogonek z lewej
+                            maxRepetitionStart=inputString.substring(p,p+l);
+                            System.out.println("inputString: "+inputString+" p,l,pm "+p+","+l+","+pm+" Repetycja: "+maxRepetitionStart);
+
+                            centerPalindrome=MakePalindrome(inputString.substring(p+l,pm));
+                            mirrorRepetition=inputString.substring(pm,pm+l);
+                            System.out.println("Odwrócony ogonek: "+InvertString(restRight));
+                            System.out.println("Największa repetycja: "+maxRepetitionStart);
+                            System.out.println("Palindrom z wnętrza: "+centerPalindrome);
+                            System.out.println("Lustrzana repetycja: "+mirrorRepetition);
+                            System.out.println("Reszta z prawej: "+restRight);
+                            result.add(InvertString(restRight)+maxRepetitionStart+centerPalindrome+mirrorRepetition+restRight);
 
                         }else{
                             restLeft=inputString.substring(0,j);
                             System.out.println("Ogonek tylko z lewej: "+restLeft);
+                            //zmodyfikować środek i dodać ogonek z prawej
+                            maxRepetitionStart=inputString.substring(p,p+l);
+                            System.out.println("inputString: "+inputString+" p,l,pm "+p+","+l+","+pm+" Repetycja: "+maxRepetitionStart);
+                            centerPalindrome=MakePalindrome(inputString.substring(p+l,pm));
+                            mirrorRepetition=inputString.substring(pm,pm+l);
+                            System.out.println("Reszta z lewej: "+restLeft);
+                            System.out.println("Największa repetycja: "+maxRepetitionStart);
+                            System.out.println("Palindrom z wnętrza: "+centerPalindrome);
+                            System.out.println("Lustrzana repetycja: "+mirrorRepetition);
+                            result.add(restLeft+maxRepetitionStart+centerPalindrome+mirrorRepetition+InvertString(restLeft));
 
                         }
                     }
                     else {
                         System.out.println("Z ogonkami.");
+                        //tu trzeba dodać logikę dokładania naprzemiennego po obu stronach
+
                     }
-                        repetisionString = partOfString;
-                        l=i;p=j;
+
 
 
 
@@ -105,22 +141,23 @@ public class Palindrome {
                 }
             }
         }
-
-        String maxRepetitionStart=inputString.substring(p,p+l);
-        String centerPalindrome=MakePalindrome(inputString.substring(p+l,pm));
-        String mirrorRepetition=inputString.substring(pm,pm+l);
-        System.out.println("Reszta z lewej: "+restLeft);
-        System.out.println("Największa repetycja: "+maxRepetitionStart);
-        System.out.println("Palindrom z wnętrza: "+centerPalindrome);
-        System.out.println("Lustrzana repetycja: "+mirrorRepetition);
-        System.out.println("Reszta z prawej: "+restRight);
-
-
-        if (repetisionString!=null){
-            result.add(maxRepetitionStart+centerPalindrome+mirrorRepetition);
-        }
-        return result;
+        return FindTheShortest(result);
     }
+    public static String FindTheShortest(List<String> listOfStrings) {
+        listOfStrings.sort(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                int compResult = o1.length()-o2.length();
+                return compResult != 0 ? compResult : o1.compareTo(o2);
+            }
+        });
+        for (String string:listOfStrings) {
+            System.out.println(string);
+        }
+        return listOfStrings.get(0);
+    }
+
+
     public static String MakePalindrome (String inputString){
         String outputString = inputString;
         char[] mirror = new char[inputString.length()-1]; //towrzę tablicę do lustrzanego odbicia
