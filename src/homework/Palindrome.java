@@ -15,8 +15,9 @@ public class Palindrome {
 //    letters, but "ecarace" comes first alphabetically.
 //
 //    As another example, given the string "google", you should return "elgoogle".
+static String inputString = "race"; //działa
 
-    static String inputString = "google"; //działa
+//    static String inputString = "google"; //działa
 
 //    static String inputString = "jajk"; //działa
 //    static String inputString = "abemngeb"; //działa
@@ -136,23 +137,17 @@ public class Palindrome {
 
                     }
 
-
-
-
-//                        if(restLeft.length()==0){
-//                            //jeżeli po lewej nic nie ma to kopjujemy z prawej
-//                            restLeft=MakePalindrome(restRight);
-//                        }else{
-//                            restRight=MakePalindrome(restLeft);
-//                        }
-
-
-//                    System.out.println("Index musterka: "+pm);
-                    //sprawdzenie czy po lewej lub prawej stronie są resztki tekstu
-
                 }
             }
         }
+        if (result.size()==0){
+            //logika kiedy na ma żadnych powtarzających się liter
+            result.add(MakePalindrome(inputString));
+            result.add(MakePalindromeInverted(inputString));
+
+        }
+
+
         return FindTheShortest(result);
     }
     public static String FindTheShortest(List<String> listOfStrings) {
@@ -177,6 +172,15 @@ public class Palindrome {
             mirror[i]=inputString.charAt(inputString.length()-i-2);
         }
         outputString += String.valueOf(mirror);
+        return outputString;
+    }
+    public static String MakePalindromeInverted (String inputString){
+        String outputString = inputString;
+        char[] mirror = new char[inputString.length()-1]; //towrzę tablicę do lustrzanego odbicia
+        for (int i = 0; i<mirror.length; i++){
+            mirror[i]=inputString.charAt(inputString.length()-1-i);
+        }
+        outputString = String.valueOf(mirror)+outputString;
         return outputString;
     }
     public static String InvertString (String inputString){
