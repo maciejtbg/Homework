@@ -16,8 +16,9 @@ public class Palindrome {
 //
 //    As another example, given the string "google", you should return "elgoogle".
 
+    static String inputString = "google"; //działa
 
-    static String inputString = "jajk"; //niedziała
+//    static String inputString = "jajk"; //działa
 //    static String inputString = "abemngeb"; //działa
 
     public static void main(String[] args) {
@@ -92,8 +93,13 @@ public class Palindrome {
                             //zmodyfikować środek i dodać ogonek z lewej
                             maxRepetitionStart=inputString.substring(p,p+l);
                             System.out.println("inputString: "+inputString+" p,l,pm "+p+","+l+","+pm+" Repetycja: "+maxRepetitionStart);
-
-                            centerPalindrome=MakePalindrome(inputString.substring(p+l,pm));
+                            if (p+l>pm){
+                                centerPalindrome = String.valueOf(inputString.charAt(p+l));
+                            }else if ((p+l)==pm){
+                                centerPalindrome="";
+                            }else{
+                                centerPalindrome=MakePalindrome(inputString.substring(p+l,pm));
+                            }
                             mirrorRepetition=inputString.substring(pm,pm+l);
                             System.out.println("Odwrócony ogonek: "+InvertString(restRight));
                             System.out.println("Największa repetycja: "+maxRepetitionStart);
@@ -108,7 +114,13 @@ public class Palindrome {
                             //zmodyfikować środek i dodać ogonek z prawej
                             maxRepetitionStart=inputString.substring(p,p+l);
                             System.out.println("inputString: "+inputString+" p,l,pm "+p+","+l+","+pm+" Repetycja: "+maxRepetitionStart);
-                            centerPalindrome=MakePalindrome(inputString.substring(p+l,pm));
+                            if (p+l>pm){
+                                centerPalindrome = String.valueOf(inputString.charAt(p+l));
+                            }else if ((p+l)==pm){
+                                centerPalindrome="";
+                            }else{
+                                centerPalindrome=MakePalindrome(inputString.substring(p+l,pm));
+                            }
                             mirrorRepetition=inputString.substring(pm,pm+l);
                             System.out.println("Reszta z lewej: "+restLeft);
                             System.out.println("Największa repetycja: "+maxRepetitionStart);
