@@ -37,13 +37,22 @@ public class MaxSubArray {
         System.out.print("Input sub array size: ");
         subArraySize = s.nextInt();
 
-        int result = CountMaxValueFromSubArrays(inputArray, subArraySize);
+        int result = 0;
+        try {
+            result = CountMaxValueFromSubArrays(inputArray, subArraySize);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         System.out.println("Sum from max values from all sub arrays is: "+result);
         s.close();
     }
 
-    private static int CountMaxValueFromSubArrays(int[] inputArray, int subArraySize) {
-        int n = arraySize-subArraySize+1;//number of subarrays
+    public static int CountMaxValueFromSubArrays(int[] inputArray, int subArraySize) throws Exception {
+        if (subArraySize<=0 || subArraySize>=inputArray.length) {
+            throw new Exception("Invalid sub array size!");
+        }
+
+        int n = inputArray.length-subArraySize+1;//number of subarrays
         int[] maxValuesInSubStrings = new int[n]; //array of max values
         int[][] allSubArrays = new int[n][subArraySize];
         for (int i = 0; i < n; i++){//pętla po kolejnych podtablicach
