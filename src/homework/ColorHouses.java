@@ -11,25 +11,48 @@ import java.util.*;
 //Given an N by K matrix where the nth color and kth column
 // represents the cost to build the nth house with kth color,
 //return the minimum cost which achieves this goal.
+
+
 public class ColorHouses {
 
-    public static int[][] inputMatrix = {
-            {1,2,3},
-            {4,1,6},
-            {7,8,1}
-    };
-    public static int[] combination = new int[inputMatrix.length];
+    public static int[][] inputMatrix;
+    public static int[] combination;
 
-    public static int[] position = new int[inputMatrix.length];
+    public static int[] position;
     public static Map<int[],Integer> positionsToValue = new LinkedHashMap<>();
 
-    public static int[] lowersPricePath = new int[inputMatrix.length];
+    public static int[] lowersPricePath;
     public static void main (String[] args){
+        GetUserInput();
+        InitializeCollections();
         Recursion(0, inputMatrix);
         lowersPricePath = FindCheapest(positionsToValue);
         System.out.println("The cheapest way will cost: "+positionsToValue.get(lowersPricePath)+" for combination: "+Arrays.toString(lowersPricePath));
     }
 
+    public static void GetUserInput(){
+        Scanner s = new Scanner(System.in);
+        System.out.print("Input how many colors is available:");
+        int colors = s.nextInt();s.nextLine();
+        System.out.print("Input how many houses is to color: ");
+        int houses = s.nextInt();s.nextLine();
+        inputMatrix = new int[houses][colors];
+
+        System.out.println("Keep putting the costs of all paintings for each house...");
+        for (int h=0; h<houses;h++){
+            System.out.println("House no. "+(h+1)+": ");
+            for (int c=0; c<colors; c++){
+                System.out.print("C"+(c+1)+":");
+                inputMatrix[h][c] = s.nextInt();
+            }
+        }
+    }
+
+    public static void InitializeCollections(){
+        combination = new int[inputMatrix.length];
+        position = new int[inputMatrix.length];
+        lowersPricePath = new int[inputMatrix.length];
+    }
     private static int[] FindCheapest(Map<int[],Integer> map) {
         map.entrySet().stream().map(entry -> "Combination: "+Arrays.toString(entry.getKey()) + " costs: " + entry.getValue()).forEach(System.out::println);
         return Collections.min(map.entrySet(),Map.Entry.comparingByValue()).getKey();
