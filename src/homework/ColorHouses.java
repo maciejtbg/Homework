@@ -58,7 +58,6 @@ public class ColorHouses {
         return Collections.min(map.entrySet(),Map.Entry.comparingByValue()).getKey();
     }
 
-
     private static void Recursion(int depth, int[][] inputMatrix) {
         for (int i = 0; i < inputMatrix[depth].length; i++) {
             if (depth == 0 || position[depth - 1] != i) {               //if it is just begin or previous position is not the same color
