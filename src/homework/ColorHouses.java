@@ -73,6 +73,7 @@ public class ColorHouses {
     }
 
     public static void minCost(int costs[][]) //ten kod jest OK bo wykorzystuje Dynamiczne Programowanie ale nie znajduje faktycznie najtańszej opcji
+            //uwzględnia tylko 3 kolory red, green, blue
     {
         int K = costs[0].length;
         int N = costs.length;
@@ -81,12 +82,12 @@ public class ColorHouses {
             return;
 
         // Auxiliary 2D dp array
-        int dp[][] = new int[N][K];
+        int dp[][] = new int[N][K]; //pomocnicza tablica. wartości 0
 
 
         // Base Case
         for (int i = 0; i < K; i++){
-            dp[0][i] = costs[0][i];
+            dp[0][i] = costs[0][i]; //tworzy tablicę dowołania do porównania czyli wartości kosztów pierwszych kolorów dla wszystkich domów
         }
 
 
