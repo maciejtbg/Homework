@@ -29,9 +29,49 @@ public class Browser {
 
     private static boolean IsMatching(String inputString, String regularExpression) {
         boolean result = false;
-
-
+        char dot = '.';
+        char asterisk = '*';
+        String leftTail = GetLeftTail(inputString, regularExpression);
+        System.out.println("Left tail:"+leftTail);
+        String rightTail = GetRightTail(inputString, regularExpression);
+        System.out.println("Right tail:"+rightTail);
 
         return result;
     }
+
+    private static String GetRightTail(String inputString, String regularExpression) {
+        int startPos = -1;
+        String result;
+        for (int i = 0; i<(regularExpression.length()-inputString.length()); i++){
+            if (regularExpression.substring(i, i+inputString.length()).equals(inputString)){
+                startPos=i+inputString.length();
+                break;
+            }
+        }
+        if (startPos!=-1){
+            result=regularExpression.substring(startPos);
+        }else {
+            result="";
+        }
+        return result;
+    }
+
+    private static String GetLeftTail(String inputString, String regularExpression) {
+        int startPos = -1;
+        String result;
+        for (int i = 0; i<(regularExpression.length()-inputString.length()); i++){
+            if (regularExpression.substring(i, i+inputString.length()).equals(inputString)){
+                startPos=i;
+                break;
+            }
+        }
+        if (startPos!=-1){
+            result=regularExpression.substring(0,startPos);
+        }else {
+            result="";
+        }
+        return result;
+    }
+
+
 }
