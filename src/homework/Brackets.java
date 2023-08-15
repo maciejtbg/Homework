@@ -13,11 +13,11 @@ public class Brackets {
 //    public static String bracketsInput = "([)]";
 
     public static void main(String[] something){
-//        System.out.println("Input text with brackets:");
-//        Scanner s = new Scanner(System.in);
-//        String textInput = s.nextLine();
-//        bracketsInput = GetBrackets(textInput);
-//        System.out.println("Yours brackets from text:"+ GetBrackets(textInput));
+        System.out.println("Input text with brackets:");
+        Scanner s = new Scanner(System.in);
+        String textInput = s.nextLine();
+        bracketsInput = GetBrackets(textInput);
+        System.out.println("Yours brackets from text:"+ GetBrackets(textInput));
         System.out.println("Does is your brackets are correct?: "+CheckBrackets(bracketsInput));
 
     }
@@ -57,26 +57,11 @@ public class Brackets {
                 System.out.println(Arrays.toString(workBrackets.toArray()));
 
             }
-        } while (bracketRemoved==true);
+        } while (bracketRemoved);
 
-        if (workBrackets.size()==0) {
-            result = true;
-        } else {
-            result = false;
-        }
+        result = workBrackets.size() == 0;
         return result;
     }
-
-    private static List<Integer> GetBracketPosList(char bracketChar, String bracketsInput) {
-        List<Integer> resultList = new LinkedList<>();
-        for (int i=0; i<=bracketsInput.length(); i++) {
-            if (bracketsInput.charAt(i) == bracketChar){
-                resultList.add(i);
-            }
-        }
-        return resultList;
-    }
-
 
     private static String GetBrackets(String textInput) {
         StringBuilder result = new StringBuilder();
